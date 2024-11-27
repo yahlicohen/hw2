@@ -1,0 +1,68 @@
+import java.util.*;
+
+public class ArrayUtils {
+
+	public static List<Integer> shiftArrayCyclic(int[] array, int move, char direction) {
+		List<Integer> NewList = new ArrayList<>();
+		for (int i = 0; i <= array.length; i++) {
+			NewList.add(i, 0);
+		}
+		if ((direction == 'R' && move > 0)||(direction == 'L' && move < 0)) {
+			for (int i = 0; i <= array.length; i++) {
+				NewList.set(i, array[(i - move + n)%n]);
+			}	
+		}
+		
+		if ((direction == 'L' && move > 0 )||(direction == 'R' && move < 0)) {
+			for (int i = 0; i <= array.length; i++) {
+				NewList.set(i, array[(i - move + n)%n]);
+			}
+		}
+		
+		return NewList; //Replace this with the correct returned value
+
+	}
+
+	public static int findShortestPath(int[][] m, int i, int j) {
+		Set<Integer> A = new HashSet<>();
+		return findShortestPath_rec(m, i, j, A); 
+
+	}
+	
+	public static int findShortestPath_rec(int[][] m, int i, int j, Set<Integer> A) {
+		if (i==j) {
+			return 0;
+		}
+		int minimum = m.length + 1;
+		if (!IsTherePath(m, i, j)) {
+			return -1;
+		}
+		
+		A.add(i);
+		for (int x = 0; x < m.length; x ++) {
+			if (m[i][x] == 1 &&  !A.contains(x)) {
+				int a = findShortestPath_rec(m, x, j, A) + 1;
+				if (minimum > a) {
+					minimum = a;
+				}
+			}
+		}
+		return minimum;
+	}
+	public static boolean IsTherePath(int[][] m, int i, int j) {
+		if (i==j) {
+			return true;
+		}
+		
+		for (int x = 0; x < m.length; x ++) {
+			if (x != i && m[x][j] == 1) {
+				if (IsTherePath(m, x, j)) {
+					return true;
+				}
+			}
+		}
+		return false;
+		
+	}
+
+}
